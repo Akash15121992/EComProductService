@@ -2,6 +2,7 @@ package dev.sandeep.EcomProductServiceDec23.controller;
 
 import dev.sandeep.EcomProductServiceDec23.dto.FakeStoreProductResponseDTO;
 import dev.sandeep.EcomProductServiceDec23.entity.Product;
+import dev.sandeep.EcomProductServiceDec23.exception.InvalidInputException;
 import dev.sandeep.EcomProductServiceDec23.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,9 @@ public class ProductController {
 
     @GetMapping("/product/{id}")
     public ResponseEntity getProductById(@PathVariable("id") int id){
+        if(id < 1){
+            throw new InvalidInputException("Input is not correct as the id is negative and id can't be negative. Please re enter with correct id");
+        }
         FakeStoreProductResponseDTO product = productService.getProduct(id);
         return ResponseEntity.ok(product);
     }

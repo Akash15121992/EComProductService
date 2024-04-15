@@ -3,6 +3,7 @@ package dev.sandeep.EcomProductServiceDec23.service;
 import dev.sandeep.EcomProductServiceDec23.client.FakeStoreClient;
 import dev.sandeep.EcomProductServiceDec23.dto.FakeStoreProductResponseDTO;
 import dev.sandeep.EcomProductServiceDec23.entity.Product;
+import dev.sandeep.EcomProductServiceDec23.exception.NoProductPresentException;
 import dev.sandeep.EcomProductServiceDec23.exception.ProductNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,9 @@ public class FakeStoreProductServiceImpl implements ProductService{
     @Override
     public List<FakeStoreProductResponseDTO> getAllProducts() {
         List<FakeStoreProductResponseDTO> fakeStoreProducts = fakeStoreClient.getAllProducts();
+        if(fakeStoreProducts == null){
+            throw new NoProductPresentException("No products are found ");
+        }
         return fakeStoreProducts;
     }
 

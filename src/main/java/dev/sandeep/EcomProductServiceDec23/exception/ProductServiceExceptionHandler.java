@@ -17,4 +17,22 @@ public class ProductServiceExceptionHandler {
         );
         return new ResponseEntity<>(exceptionResponseDto, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(NoProductPresentException.class)
+    public ResponseEntity handleNoProductPresentException(NoProductPresentException ne){
+        ExceptionResponseDto exceptionResponseDto = new ExceptionResponseDto(
+                ne.getMessage(),
+                404
+        );
+        return new ResponseEntity<>(exceptionResponseDto, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InvalidInputException.class)
+    public ResponseEntity handleInvalidInputException(InvalidInputException ie){
+        ExceptionResponseDto exceptionResponseDto = new ExceptionResponseDto(
+                ie.getMessage(),
+                400
+        );
+        return new ResponseEntity<>(exceptionResponseDto, HttpStatus.BAD_REQUEST);
+    }
 }
