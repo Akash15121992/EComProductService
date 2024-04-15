@@ -24,3 +24,16 @@ Standard industry process is that controller should only deal with DTOs
 
 Previously Controller layer was calling mapper and converting DTO to entity and entity to DTO.
 BUT now controller layer will deal with DTOs only and conversion will happen in service layer.
+
+Exception Handling
+
+We do not handle the exception by using throws or by try catch in controller or service layer
+
+WE create a seperate package for exception and write all the code logic to handle the exception there
+this process is called controlleradvice.
+
+when controller throws the exception it does it according to the configuration , which class is marked with
+@controlleradvice annotation.
+Controller class whenever wants to throw an exception , it follows controlleradvice.
+
+Need to create a response dto object class to respond back whenever an exception occurs.
