@@ -1,2 +1,26 @@
 DeSerialization -> Process of converting json string to an object .
 Serialization -> Process of converting object to json string .
+
+
+Standard industry process is that controller should only deal with DTOs
+Controller -> Input DTO , Output -> DTO , Downstream (Service) -> DTO
+
+Service -> Input -> DTO , Output ->  DTO  , Downstream (Repository) -> Entity
+Service layer is the layer at which conversion from DTO to entity or entity to dto happens
+as conversion can be part of business logic
+
+Client -> Input -> DTO , Output -> DTO , everything is DTO.
+Client is called by service layer .
+
+Repository -> Input -> Entity ,Output -> Entity , DB saves entity only.
+
+as conversion can be part of business logic
+statistia (website for showing/rendering data based on plan you take). Three types of plan
+1. free    -> shows 3 tabs
+2. general -> shows 5 tabs
+3. pro     -> shows 10 tabs
+
+Standard industry process is that controller should only deal with DTOs
+
+Previously Controller layer was calling mapper and converting DTO to entity and entity to DTO.
+BUT now controller layer will deal with DTOs only and conversion will happen in service layer.
