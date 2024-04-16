@@ -37,3 +37,8 @@ when controller throws the exception it does it according to the configuration ,
 Controller class whenever wants to throw an exception , it follows controlleradvice.
 
 Need to create a response dto object class to respond back whenever an exception occurs.
+
+For Smaller Projects with few controller and fewer methods , it is ok to have single controller advise
+
+For Bigger Projects , with multiple controller and multiple methods , we need to have controller specific
+controller advice classes.
