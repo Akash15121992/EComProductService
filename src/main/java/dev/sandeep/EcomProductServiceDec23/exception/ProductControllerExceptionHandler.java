@@ -27,6 +27,15 @@ public class ProductControllerExceptionHandler {
         );
         return new ResponseEntity<>(exceptionResponseDto, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(ProductAndCartLimitException.class)
+    public ResponseEntity handleProductLimitException(ProductAndCartLimitException pl){
+        ExceptionResponseDto exceptionResponseDto = new ExceptionResponseDto(
+                pl.getMessage(),
+                400
+        );
+        return new ResponseEntity<>(exceptionResponseDto, HttpStatus.BAD_REQUEST);
+    }
    /*
     @ExceptionHandler(CartNotFoundException.class)
      public ResponseEntity handleCartNotFoundException(CartNotFoundException ce){

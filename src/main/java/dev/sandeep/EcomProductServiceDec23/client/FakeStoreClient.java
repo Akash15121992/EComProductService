@@ -24,6 +24,10 @@ public class FakeStoreClient {
 
     @Value("${fakestore.api.cart.for.user.path}")
     private String fakeStoreAPICartForUser;
+    @Value("${fakestore.api.product.for.limit}")
+    private String fakeStoreAPIProductForLimit;
+    @Value("${fakestore.api.cart.for.limit}")
+    private String fakeStoreAPICartForLimit;
 
     public List<FakeStoreProductResponseDTO> getAllProducts(){
         String fakeStoreGetAllProductsURL = fakeStoreAPIBaseUrl.concat(fakeStoreAPIProductPath);
@@ -53,6 +57,30 @@ public class FakeStoreClient {
         ResponseEntity<FakeStoreCartResponseDTO[]> cartResponse =
                 restTemplate.getForEntity(fakeStoreGetCartForUser, FakeStoreCartResponseDTO[].class);
         return List.of(cartResponse.getBody());
+    }
+
+    public List<FakeStoreProductResponseDTO> getProductForLimit(int limit){
+        // url -> https://fakestoreapi.com/products?limit=1
+        if(limit<1)
+            return  null;
+        String fakeStoreGetCartForUser = fakeStoreAPIBaseUrl.concat(fakeStoreAPIProductForLimit).
+                concat(String.valueOf(limit));
+        RestTemplate restTemplate = restTemplateBuilder.build();
+        ResponseEntity<FakeStoreProductResponseDTO[]> productLimitResponse =
+                restTemplate.getForEntity(fakeStoreGetCartForUser, FakeStoreProductResponseDTO[].class);
+        return List.of(productLimitResponse.getBody());
+    }
+
+    public List<FakeStoreCartResponseDTO> getCartForLimit(int limit){
+        // url -> https://fakestoreapi.com/carts?limit=5
+        if(limit<1)
+            return  null;
+        String fakeStoreGetCartForUser = fakeStoreAPIBaseUrl.concat(fakeStoreAPICartForLimit).
+                concat(String.valueOf(limit));
+        RestTemplate restTemplate = restTemplateBuilder.build();
+        ResponseEntity<FakeStoreCartResponseDTO[]> cartLimitResponse =
+                restTemplate.getForEntity(fakeStoreGetCartForUser, FakeStoreCartResponseDTO[].class);
+        return List.of(cartLimitResponse.getBody());
     }
 }
 

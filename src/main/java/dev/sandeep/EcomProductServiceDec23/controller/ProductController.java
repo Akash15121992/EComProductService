@@ -1,8 +1,9 @@
 package dev.sandeep.EcomProductServiceDec23.controller;
 
+import dev.sandeep.EcomProductServiceDec23.client.FakeStoreClient;
 import dev.sandeep.EcomProductServiceDec23.dto.FakeStoreProductResponseDTO;
-import dev.sandeep.EcomProductServiceDec23.entity.Product;
 import dev.sandeep.EcomProductServiceDec23.exception.InvalidInputException;
+import dev.sandeep.EcomProductServiceDec23.exception.ProductAndCartLimitException;
 import dev.sandeep.EcomProductServiceDec23.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,9 @@ public class ProductController {
     @Autowired
     private ProductService productService; // field injection
 
+    @Autowired
+    private FakeStoreClient fakeStoreClient;
+
     @GetMapping("/product")
     public ResponseEntity getAllProducts(){
         List<FakeStoreProductResponseDTO> products = productService.getAllProducts();
@@ -32,5 +36,14 @@ public class ProductController {
         }
         FakeStoreProductResponseDTO product = productService.getProduct(id);
         return ResponseEntity.ok(product);
+    }
+
+    @GetMapping("/products/{limit}")
+    public ResponseEntity getProductForLimit(@PathVariable("limit")int limit){
+        List<FakeStoreProductResponseDTO> productLimitResponse = fakeStoreClient.getProductForLimit(limit);
+        if(productLimitResponse == null){
+            throw new ProductAndCartLimitException("The limit for the product is not valid = " + limit);
+        }
+        return ResponseEntity.ok(productLimitResponse);
     }
 }

@@ -3,6 +3,7 @@ package dev.sandeep.EcomProductServiceDec23.controller;
 import dev.sandeep.EcomProductServiceDec23.client.FakeStoreClient;
 import dev.sandeep.EcomProductServiceDec23.dto.FakeStoreCartResponseDTO;
 import dev.sandeep.EcomProductServiceDec23.exception.CartNotFoundException;
+import dev.sandeep.EcomProductServiceDec23.exception.ProductAndCartLimitException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,5 +25,14 @@ public class CartController {
             throw new CartNotFoundException("Cart not found for the userId = " + userId);
         }
         return ResponseEntity.ok(cartResponse);
+    }
+
+    @GetMapping("/carts/{limit}")
+    public ResponseEntity getCartForLimit(@PathVariable("limit")int limit){
+        List<FakeStoreCartResponseDTO> cartLimitResponse = fakeStoreClient.getCartForLimit(limit);
+        if(cartLimitResponse == null){
+            throw new ProductAndCartLimitException("The limit for the cart is not valid = " + limit);
+        }
+        return ResponseEntity.ok(cartLimitResponse);
     }
 }
