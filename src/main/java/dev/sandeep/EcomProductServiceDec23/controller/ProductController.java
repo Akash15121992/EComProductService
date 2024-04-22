@@ -2,14 +2,13 @@ package dev.sandeep.EcomProductServiceDec23.controller;
 
 import dev.sandeep.EcomProductServiceDec23.client.FakeStoreClient;
 import dev.sandeep.EcomProductServiceDec23.dto.FakeStoreProductResponseDTO;
+import dev.sandeep.EcomProductServiceDec23.entity.Product;
 import dev.sandeep.EcomProductServiceDec23.exception.InvalidInputException;
 import dev.sandeep.EcomProductServiceDec23.exception.ProductAndCartLimitException;
 import dev.sandeep.EcomProductServiceDec23.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -45,5 +44,11 @@ public class ProductController {
             throw new ProductAndCartLimitException("The limit for the product is not valid = " + limit);
         }
         return ResponseEntity.ok(productLimitResponse);
+    }
+
+    @PostMapping("/product")
+    public ResponseEntity createProduct(@RequestBody Product product){
+        Product savedProduct = productService.createProduct(product);
+        return ResponseEntity.ok(savedProduct);
     }
 }
